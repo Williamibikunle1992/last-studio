@@ -1,48 +1,74 @@
 /*jshint esversion: 6 */
 
-// Lightbox functionality
-// the first step we want to do is to show our lightbox when we click on an image
-// we want to make sure that the image we clicked on will be in the lightbox
-// we want to make sure that when we click on the lightbox when its visible that it will fade out and hide itself again
-
-$('.brogues img, .stationary img').on('click', function() {
-  $('.lightbox').fadeIn();
-
-  let imageSrc = $(this).attr('src');
-  $('.lightbox img').attr('src', imageSrc);
-});
-
-$('.lightbox').on('click', function() {
-  $('.lightbox').fadeOut();
-});
-
-// We first need to listen for the scroll event on the page
-// Next, when our browser reaches a certain distance form the top of the page we need to change the body elements background color
-
-const body = document.querySelector("body");
-
-// Listen out for scroll events on our page
+//we need to listen
+//for scroll events on the pageX
+//when the scroll bar reaches a certain distance
+//we want to change thebackground color of the body
+// step1: decide which tags in html we want to use and save them as constants at the top of the page
+//const bodyTag.style.backgroundColor = "#000000";
+const bodyTag = document.querySelector("body");
+// step 2: decide which user events ie, clcik, scroll, etc we want to trigger our code on. here
 document.addEventListener("scroll", function() {
-  //console.log("Page scrolled");
 
-  // Find out and store how far from the top of the page the scrollbar is
+  console.log("We scrolllled!");
+
+  //step3: find out and store how far from the top of the page the scroll bar console.log(require('util').inspect(, { depth: null }));
+
   let distanceFromTop = window.scrollY;
   console.log(distanceFromTop);
 
-  // If distanceFromTop is greater than 1000 pixels, do something
+  // if the distance from top is greater than 1000 pixels, do something
+
   if (distanceFromTop > 1000) {
-    console.log("past 1000 pixels");
-    body.classList.add("brogue-active");
+    //do this
+    //bodyTag.style.backgroundColor = ("red");
+    bodyTag.classList.add("brogue-active");
+
   } else {
-    // Otherwise do something else
-    console.log("less than 1000 pixels down");
-    body.classList.remove("brogue-active");
+    bodyTag.classList.remove("brogue-active");
+    //bodyTag.style.backgroundColor = ("white");
   }
 
-  if (distanceFromTop > 4400) {
-    body.classList.add("stationary-active");
+  if (distanceFromTop > 4300) {
+    //do this
+    //bodyTag.style.backgroundColor = ("red");
+    bodyTag.classList.add("stationary-active");
+
   } else {
-    body.classList.remove("stationary-active");
+    bodyTag.classList.remove("stationary-active");
+    //bodyTag.style.backgroundColor = ("white");
   }
+
+});
+
+//lightbox
+//when we click on an image
+//we want to show the light box
+//inside the lightbox must be the image we clicked on
+//click again to disapear
+// step1: decide which tags in HTML we want to use and save them in constants
+
+//save all our images as a constant - a list of images
+const images = document.querySelectorAll("section img");
+const lightbox = document.querySelector(".lightbox");
+const lightboxImage = document.querySelector(".lightbox img");
+
+console.log(images);
+
+images.forEach(image => {
+
+  image.addEventListener("click", function() {
+    console.log("image clicked");
+    lightbox.classList.add("fadeIn");
+
+    let imageSrc = this.getAttribute("src");
+    console.log(imageSrc);
+    lightboxImage.setAttribute("src", imageSrc);
+  });
+
+});
+
+lightbox.addEventListener("click", function() {
+  lightbox.classList.remove("fadeIn");
 
 });
